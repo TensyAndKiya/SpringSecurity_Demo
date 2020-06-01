@@ -1,0 +1,48 @@
+# port
+server:
+  port: 8001
+
+  # undertow配置
+  undertow:
+    accesslog:
+      enabled: false
+    io-threads: 8
+    worker-threads: 32
+
+# 使用配置类来代替默认密码
+#spring:
+#  security:
+#    user:
+#      name: admin
+#      password: 123456
+
+spring:
+  # 数据库连接
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/security?useUnicode=true&characterEncoding=utf-8&serverTimezone=CTT
+    username: kiya
+    password: liuli
+    hikari:
+      connection-timeout: 5000
+      minimum-idle: 5
+      idle-timeout: 6000000
+      maximum-pool-size: 10
+  # redis
+  redis:
+    host: 121.40.250.223
+    port: 6379
+    password: liuli
+    database: 0
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    timeout: 1000
+
+# Mybatis
+mybatis:
+  type-aliases-package: com.clei.dao
+  mapper-locations: classpath:mappers/**/*Mapper.xml

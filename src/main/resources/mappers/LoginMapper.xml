@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clei.dao.LoginMapper">
+
+	<resultMap id="login" type="org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken">
+		<result property="username" column="user_name" javaType="java.lang.String"></result>
+		<result property="series" column="series" javaType="java.lang.String"></result>
+		<result property="tokenValue" column="token" javaType="java.lang.String"></result>
+		<result property="date" column="date" javaType="java.util.Date"></result>
+	</resultMap>
+
+	<insert id="saveLogins" parameterType="org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken">
+		INSERT INTO logins(id,
+			username,
+			series,
+			token,
+			last_used,
+			deleted)
+		VALUES(REPLACE(UUID(),'-',''),
+			#{username},
+			#{series},
+			#{tokenValue},
+			#{date},
+			DEFAULT);
+	</insert>
+
+	<update id="updateTokenBySeries" parameterType="java.util.Map">
+		UPDATE logins
+		SET token = #{token},
+			last_used = #{date}
+		WHERE series = #{series};
+	</update>
+
+	<select id="getBySeries" parameterType="java.lang.String" resultMap="login">
+		SELECT username,
+			series,
+			token,
+			last_used AS date
+		FROM logins
+		WHERE series = #{series};
+	</select>
+
+	<delete id="deleteByUserName" parameterType="java.lang.String">
+		DELETE FROM logins
+		WHERE username = #{username};
+	</delete>
+  
+</mapper>

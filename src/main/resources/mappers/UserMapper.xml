@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clei.dao.UserMapper">
+
+	<resultMap id="user" type="com.clei.entity.User">
+		<result property="accountExpired" column="account_expired" javaType="java.lang.Boolean"></result>
+		<result property="accountLocked" column="account_locked" javaType="java.lang.Boolean"></result>
+		<result property="age" column="age" javaType="java.lang.Integer"></result>
+		<result property="credentialExpired" column="credential_expired" javaType="java.lang.Boolean"></result>
+		<result property="deleted" column="deleted" javaType="java.lang.Boolean"></result>
+		<result property="email" column="email" javaType="java.lang.String"></result>
+		<result property="enabled" column="enabled" javaType="java.lang.Boolean"></result>
+		<result property="gender" column="gender" javaType="java.lang.Boolean"></result>
+		<result property="id" column="id" javaType="java.lang.String"></result>
+		<result property="username" column="login_name" javaType="java.lang.String"></result>
+		<result property="nickname" column="nickname" javaType="java.lang.String"></result>
+		<result property="password" column="password" javaType="java.lang.String"></result>
+	</resultMap>
+
+	<sql id="totalColumn">
+		account_expired,
+		account_locked,
+		age,
+		credential_expired,
+		deleted,
+		email,
+		enabled,
+		gender,
+		id,
+		login_name,
+		nickname,
+		password
+	</sql>
+
+	<select id="selectByLoginName" resultMap="user" parameterType="java.lang.String">
+		SELECT <include refid="totalColumn"></include>
+		FROM user
+		WHERE login_name = #{loginName}
+		AND deleted = 0;
+	</select>
+  
+</mapper>
