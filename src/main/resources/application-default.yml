@@ -1,0 +1,9 @@
+# 默认的profile
+
+# 自定义属性
+test:
+  names:
+    - 张三
+    - 李四
+    - 王五
+  number: 3
